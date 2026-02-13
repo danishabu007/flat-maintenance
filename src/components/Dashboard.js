@@ -18,12 +18,13 @@ function Dashboard() {
     }
   };
 
-  const groupByMonth = (items) => {
+  // Group By Month-Year
+  const groupByMonth = (items = []) => {
     return items.reduce((acc, item) => {
       const date = new Date(item.date);
       const monthYear = date.toLocaleString("default", {
         month: "long",
-        year: "numeric"
+        year: "numeric",
       });
 
       if (!acc[monthYear]) {
@@ -35,11 +36,29 @@ function Dashboard() {
     }, {});
   };
 
-  if (!data)
+  if (!data) {
     return <h3 className="loading-text">Loading...</h3>;
+  }
 
-  const groupedPayments = groupByMonth(data.payments);
-  const groupedExpenses = groupByMonth(data.expenses);
+  const payments = data.payments || [];
+  const expenses = data.expenses || [];
+
+  const groupedPayments = groupByMonth(payments);
+  const groupedExpenses = groupByMonth(expenses);
+
+  // 🔥 Balance frontend me calculate
+  const totalCollection = data.totalCollection || 0;
+  const totalExpense = data.totalExpense || 0;
+  const balance = totalCollection - totalExpense;
+
+  // Sort months (latest first)
+  const sortedPaymentMonths = Object.keys(groupedPayments).sort(
+    (a, b) => new Date(b) - new Date(a)
+  );
+
+  const sortedExpenseMonths = Object.keys(groupedExpenses).sort(
+    (a, b) => new Date(b) - new Date(a)
+  );
 
   return (
     <div className="dashboard-container">
@@ -51,27 +70,31 @@ function Dashboard() {
       <div className="summary-grid">
         <div className="summary-card income">
           <h4>Total Collection</h4>
-          <p>₹ {data.totalCollection}</p>
+          <p>₹ {totalCollection}</p>
         </div>
 
         <div className="summary-card expense">
           <h4>Total Expense</h4>
-          <p>₹ {data.totalExpense}</p>
+          <p>₹ {totalExpense}</p>
         </div>
 
         <div className="summary-card balance">
           <h4>Balance</h4>
-          <p>₹{data.balance}</p>
+          <p>₹ {balance}</p>
         </div>
       </div>
 
-      {/* Payments */}
+      {/* Payments Section */}
       <div className="section">
         <h3 className="section-title">
           Payments (Month Wise)
         </h3>
 
-        {Object.keys(groupedPayments).map((month) => {
+        {sortedPaymentMonths.length === 0 && (
+          <p className="no-data">No Payments Found</p>
+        )}
+
+        {sortedPaymentMonths.map((month) => {
           const monthlyTotal = groupedPayments[month].reduce(
             (sum, p) => sum + p.amount,
             0
@@ -87,7 +110,7 @@ function Dashboard() {
                 <table>
                   <thead>
                     <tr>
-                      <th>Flat</th>
+                      {/* <th>Flat</th> */}
                       <th>Name</th>
                       <th>Amount</th>
                       <th>Date</th>
@@ -96,10 +119,10 @@ function Dashboard() {
                   <tbody>
                     {groupedPayments[month].map((p, i) => (
                       <tr key={i}>
-                        <td>{p.flatNumber}</td>
+                        {/* <td>{p.flatNumber}</td> */}
                         <td>{p.name}</td>
                         <td className="income-text">
-                          ₹{p.amount}
+                          ₹ {p.amount}
                         </td>
                         <td>
                           {new Date(p.date).toLocaleDateString()}
@@ -114,13 +137,17 @@ function Dashboard() {
         })}
       </div>
 
-      {/* Expenses */}
+      {/* Expenses Section */}
       <div className="section">
         <h3 className="section-title">
           Expenses (Month Wise)
         </h3>
 
-        {Object.keys(groupedExpenses).map((month) => {
+        {sortedExpenseMonths.length === 0 && (
+          <p className="no-data">No Expenses Found</p>
+        )}
+
+        {sortedExpenseMonths.map((month) => {
           const monthlyTotal = groupedExpenses[month].reduce(
             (sum, e) => sum + e.amount,
             0
@@ -146,7 +173,7 @@ function Dashboard() {
                       <tr key={i}>
                         <td>{e.title}</td>
                         <td className="expense-text">
-                          ₹{e.amount}
+                          ₹ {e.amount}
                         </td>
                         <td>
                           {new Date(e.date).toLocaleDateString()}

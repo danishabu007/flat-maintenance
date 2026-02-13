@@ -7,20 +7,46 @@ function AddPayment() {
     name: "",
     month: "",
     year: "",
-    amount: ""
+    amount: "",
   });
 
+  // 🔥 First Letter Capital Function
+  const capitalizeWords = (value) => {
+    return value.toLowerCase().replace(/\b\w/g, (char) => char.toUpperCase());
+  };
+
   const handleChange = (e) => {
-    setForm({ ...form, [e.target.name]: e.target.value });
+    const { name, value } = e.target;
+
+    // Agar name field hai to auto capitalize kare
+    if (name === "name") {
+      setForm({ ...form, [name]: capitalizeWords(value) });
+    } else {
+      setForm({ ...form, [name]: value });
+    }
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+
     try {
       await API.post("/payments", form);
-      alert("Payment Added Successfully");
+      alert("Payment Added Successfully ✅");
+
+      // ✅ Form Reset
+      setForm({
+        flatNumber: "",
+        name: "",
+        month: "",
+        year: "",
+        amount: "",
+      });
+
+      // ✅ Page Refresh (optional)
+      window.location.reload();
     } catch (err) {
       console.log(err);
+      alert("Error adding payment");
     }
   };
 
@@ -28,11 +54,39 @@ function AddPayment() {
     <div className="container">
       <h2>Add Payment</h2>
       <form onSubmit={handleSubmit}>
-        <input name="flatNumber" placeholder="Flat Number" onChange={handleChange} required />
-        <input name="name" placeholder="Name" onChange={handleChange} required />
-        <input name="month" placeholder="Month" onChange={handleChange} required />
-        <input name="year" placeholder="Year" onChange={handleChange} required />
-        <input name="amount" placeholder="Amount" type="number" onChange={handleChange} required />
+        <input
+          name="name"
+          placeholder="Name"
+          value={form.name}
+          onChange={handleChange}
+          required
+        />
+
+        <input
+          name="month"
+          placeholder="Month"
+          value={form.month}
+          onChange={handleChange}
+          required
+        />
+
+        <input
+          name="year"
+          placeholder="Year"
+          value={form.year}
+          onChange={handleChange}
+          required
+        />
+
+        <input
+          name="amount"
+          placeholder="Amount"
+          type="number"
+          value={form.amount}
+          onChange={handleChange}
+          required
+        />
+
         <button type="submit">Submit</button>
       </form>
     </div>
