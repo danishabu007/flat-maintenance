@@ -11,6 +11,12 @@
   color: #2c3e50;
 }
 
+.loading-text {
+  text-align: center;
+  margin-top: 100px;
+  font-size: 20px;
+}
+
 .summary-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
@@ -48,8 +54,25 @@
 }
 
 .section {
-  margin-bottom: 40px;
+  margin-bottom: 50px;
 }
+
+.section-title {
+  text-align: center;
+  margin-bottom: 25px;
+  font-size: 22px;
+  font-weight: 600;
+  color: #34495e;
+}
+
+.month-title {
+  text-align: left;
+  margin: 25px 0 15px 10px;
+  font-size: 18px;
+  font-weight: 600;
+  color: #2c3e50;
+}
+
 
 .table-wrapper {
   overflow-x: auto;
