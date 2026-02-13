@@ -22,7 +22,7 @@ function Dashboard() {
 
   return (
     <div className="dashboard-container">
-      <h2 className="dashboard-title">Flat Maintenance Dashboard</h2>
+      <h2 className="dashboard-title">Flat Maintenance Dashbohhhard</h2>
 
       {/* Summary Cards */}
       <div className="summary-grid">
