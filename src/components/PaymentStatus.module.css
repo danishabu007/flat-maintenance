@@ -1,0 +1,70 @@
+.container {
+  width: 100%;
+  padding: 20px;
+  box-sizing: border-box;
+}
+
+.heading {
+  text-align: center;
+  margin-bottom: 20px;
+  font-size: 22px;
+  font-weight: 600;
+}
+
+/* Table wrapper for horizontal scroll on mobile */
+.tableWrapper {
+  width: 100%;
+  overflow-x: auto;
+}
+
+/* Table styling */
+.table {
+  width: 100%;
+  border-collapse: collapse;
+  min-width: 650px; /* Important for mobile scroll */
+  background-color: #ffffff;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+/* Table head */
+.table thead {
+  background-color: #2c3e50;
+  color: #ffffff;
+}
+
+.table th,
+.table td {
+  padding: 12px 15px;
+  text-align: center;
+  border: 1px solid #e0e0e0;
+  font-size: 14px;
+}
+
+/* Zebra striping */
+.table tbody tr:nth-child(even) {
+  background-color: #f9f9f9;
+}
+
+/* Hover effect */
+.table tbody tr:hover {
+  background-color: #f1f1f1;
+  transition: 0.3s ease;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .container {
+    padding: 10px;
+  }
+
+  .heading {
+    font-size: 18px;
+  }
+
+  .table th,
+  .table td {
+    padding: 8px;
+    font-size: 12px;
+  }
+}
