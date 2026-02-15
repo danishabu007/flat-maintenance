@@ -33,13 +33,13 @@ function Navbar() {
         </span>
       </h2>
 
-      <div>
+      {/* <div>
         <Link to="/">Dashboard</Link>
         <Link to="/add-payment">Add Payment</Link>
         <Link to="/add-expense">Add Expense</Link>
         <Link to="/status">Payment Status</Link>
         <Link to="/monthly-report">Monthly Report</Link>
-      </div>
+      </div> */}
     </div>
   );
 }
